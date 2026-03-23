@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Páscoa da Analu | Menu Inteligente</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-pink: #8B4A6F;
+            --soft-pink: #D4A5C7;
+            --dark-pink: #6B3A5A;
+            --light-pink: #E8D9CE;
+            --accent-gold: #D4AF37;
+            --bg-gradient: linear-gradient(135deg, #fcfdf7 0%, #ece6e1 50%, #f0ede8 100%);
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-dark: rgba(139, 74, 111, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            color: #5A4A52;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUND ANIMADO */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 165, 199, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s infinite linear;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .top-logo {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .top-logo img {
+            max-width: 350px;
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(139, 74, 111, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .top-logo img:hover {
+            transform: scale(1.05) rotateY(5deg);
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(139, 74, 111, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-container::before {
+            content: "🥕";
+            position: absolute;
+            top: -20px;
+            right: 15px;
+            font-size: 28px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .flex-content {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .flex-content {
+                flex-direction: row;
+                gap: 20px;
+            }
+        }
+
+        .left-side { flex: 1; }
+        .right-side { flex: 1.2; }
+
+        .photo-box {
+            background: linear-gradient(135deg, #8B7B7B 0%, #9B8B8B 100%);
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(91, 74, 82, 0.2);
+            margin-top: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photo-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(139, 74, 111, 0.3);
+        }
+
+        .photo-box img {
+            width: 100%;
+            border-radius: 20px;
+            display: block;
+        }
+
+        .section-label {
+            color: #8B4A6F;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #8B4A6F, #D4A5C7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-option {
+            background: linear-gradient(135deg, rgba(240, 232, 227, 0.8), rgba(232, 221, 211, 0.8));
+            border: 2px solid #D4A5C7;
+            padding: 14px 16px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #5A4A52;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(139, 74, 111, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-option::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-option:hover:not(.disabled) {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(139, 74, 111, 0.25);
+            border-color: #8B4A6F;
+        }
+
+        .btn-option:hover::before {
+            left: 100%;
+        }
+
+        .btn-option:active:not(.disabled) {
+            transform: scale(0.95);
+        }
+
+        .btn-option.active {
+            border: 2px solid #8B4A6F;
+            color: white;
+            background: linear-gradient(135deg, #8B4A6F 0%, #A85A7F 100%);
+            box-shadow: 0 12px 35px rgba(139, 74, 111, 0.4);
+            position: relative;
+        }
+
+        .btn-option.active::after {
+            content: "✓";
+            position: absolute;
+            right: 12px;
+            font-size: 18px;
+            animation: checkMark 0.4s ease;
+        }
+
+        @keyframes checkMark {
+            0% { transform: scale(0) rotate(-45deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        .btn-option.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .egg-carousel {
+            background: linear-gradient(135deg, rgba(253, 251, 248, 0.9), rgba(250, 246, 240, 0.9));
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid rgba(232, 217, 206, 0.5);
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .egg-container {
+            width: 100%;
+            animation: fadeInEgg 0.5s ease forwards;
+        }
+
+        @keyframes fadeInEgg {
+            from {
+                opacity: 0;
+                transform: scale(0.85) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0);
+            }
+        }
+
+        .egg-container.exit {
+            animation: fadeOutEgg 0.4s ease forwards;
+        }
+
+        @keyframes fadeOutEgg {
+            from {
+                opacity: 1;
+                transform: scale(1) rotateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.85) rotateX(10deg);
+            }
+        }
+
+        .egg-title {
+            font-size: 16px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8B4A6F, #D4A5C7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .egg-progress {
+            font-size: 12px;
+            color: #D4A5C7;
+            font-weight: 600;
+            background: rgba(212, 165, 199, 0.15);
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+
+        .egg-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .selection-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .selection-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #8B4A6F;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .selection-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 2px solid #D4A5C7;
+            background: rgba(255, 255, 255, 0.8);
+            color: #5A4A52;
+            font-size: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(139, 74, 111, 0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        .selection-input:focus {
+            outline: none;
+            border: 2px solid #8B4A6F;
+            background: rgba(245, 232, 240, 0.95);
+            box-shadow: 0 0 15px rgba(139, 74, 111, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .selection-input:hover {
+            border-color: #8B4A6F;
+            box-shadow: 0 6px 16px rgba(139, 74, 111, 0.15);
+        }
+
+        .btn-next-egg {
+            background: linear-gradient(135deg, #D4A5C7 0%, #C494B7 100%);
+            color: white;
+            border: none;
+            padding: 13px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(139, 74, 111, 0.2);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-next-egg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: left 0.5s ease;
+        }
+
+        .btn-next-egg:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 74, 111, 0.35);
+        }
+
+        .btn-next-egg:hover::before {
+            left: 100%;
+        }
+
+        .btn-next-egg:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .btn-next-egg:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #resumo {
+            margin-top: 15px;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(248, 245, 242, 0.6));
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(139, 74, 111, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            display: none;
+            animation: slideInCart 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 280px;
+            overflow-y: auto;
+            position: relative;
+            border: 2px solid rgba(212, 165, 199, 0.3);
+            backdrop-filter: blur(15px);
+        }
+
+        @keyframes slideInCart {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .cart-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #8B4A6F;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(232, 217, 206, 0.5);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 11px;
+            margin-bottom: 12px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(249, 247, 244, 0.9), rgba(255, 255, 255, 0.9));
+            border-radius: 14px;
+            color: #5A4A52;
+            animation: slideInItem 0.3s ease;
+            border-left: 4px solid #D4A5C7;
+            box-shadow: 0 4px 14px rgba(139, 74, 111, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cart-item:hover {
+            transform: translateX(6px);
+            box-shadow: 0 8px 20px rgba(139, 74, 111, 0.2);
+            border-left-color: #8B4A6F;
+        }
+
+        @keyframes slideInItem {
+            0% {
+                opacity: 0;
+                transform: translateX(-25px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cart-item-info {
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .cart-item-info strong {
+            font-size: 12px;
+            color: #8B4A6F;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-details {
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid #E8D9CE;
+            font-size: 10px;
+        }
+
+        .cart-egg {
+            margin: 4px 0;
+            padding: 3px 0;
+            color: #5A4A52;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cart-egg small {
+            color: #D4A5C7;
+            font-weight: 600;
+        }
+
+        .btn-remove {
+            color: #C4747A;
+            cursor: pointer;
+            padding: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(196, 116, 122, 0.1);
+        }
+
+        .btn-remove:hover {
+            color: #A85A62;
+            background: rgba(196, 116, 122, 0.25);
+            transform: scale(1.2) rotate(90deg);
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-action::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-action:active:not(:disabled) {
+            transform: scale(0.92);
+        }
+
+        .btn-action:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-add-cart {
+            background: linear-gradient(135deg, #8B4A6F 0%, #A85A7F 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(139, 74, 111, 0.35);
+        }
+
+        .btn-add-cart:hover:not(:disabled) {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(139, 74, 111, 0.45);
+        }
+
+        .btn-add-cart.glow {
+            animation: glowPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(139, 74, 111, 0.35), 0 0 20px rgba(139, 74, 111, 0.2);
+            }
+            50% {
+                box-shadow: 0 12px 40px rgba(139, 74, 111, 0.5), 0 0 40px rgba(139, 74, 111, 0.4);
+                transform: translateY(-4px) scale(1.02);
+            }
+        }
+
+        .btn-add-cart:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            animation: none;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #6B9E7A 0%, #7FB08F 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(107, 158, 122, 0.35);
+        }
+
+        .btn-whatsapp:hover:not(:disabled) {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(107, 158, 122, 0.45);
+        }
+
+        .btn-whatsapp.glow {
+            animation: glowPulseWhatsApp 1.5s ease-in-out infinite;
+        }
+
+        @keyframes glowPulseWhatsApp {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(107, 158, 122, 0.35), 0 0 20px rgba(107, 158, 122, 0.2);
+            }
+            50% {
+                box-shadow: 0 12px 40px rgba(107, 158, 122, 0.5), 0 0 40px rgba(107, 158, 122, 0.4);
+                transform: translateY(-4px) scale(1.02);
+            }
+        }
+
+        .btn-more {
+            background: linear-gradient(135deg, #D4A5C7 0%, #C494B7 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(212, 165, 199, 0.35);
+        }
+
+        .btn-more:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(212, 165, 199, 0.45);
+        }
+
+        .btn-chat-fixo {
+            background: linear-gradient(135deg, rgba(240, 232, 227, 0.95), rgba(232, 221, 211, 0.95));
+            color: #8B4A6F;
+            border: 2px solid #8B4A6F;
+            box-shadow: 0 6px 20px rgba(139, 74, 111, 0.15);
+            animation: subtlePulse 2.5s infinite;
+        }
+
+        .btn-chat-fixo:hover {
+            background: linear-gradient(135deg, #8B4A6F 0%, #A85A7F 100%);
+            color: white;
+            transform: scale(1.08);
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        #chat-box {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            width: 100%;
+            max-width: 320px;
+            height: 100vh;
+            max-height: 500px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 245, 242, 0.95));
+            border-radius: 20px 20px 0 0;
+            padding: 0;
+            box-shadow: 0 20px 60px rgba(91, 74, 82, 0.35);
+            z-index: 9999;
+            overflow: hidden;
+            border: 2px solid rgba(212, 165, 199, 0.3);
+            flex-direction: column;
+            margin: auto;
+            right: 15px;
+            animation: slideUp 0.4s ease;
+            backdrop-filter: blur(15px);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        #chat-box.open { display: flex; }
+
+        @media (max-width: 600px) {
+            #chat-box {
+                width: 100%;
+                max-width: 100%;
+                right: 0;
+                left: 0;
+                bottom: 0;
+                border-radius: 20px 20px 0 0;
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #8B4A6F 0%, #A85A7F 100%);
+            color: white;
+            padding: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(139, 74, 111, 0.3);
+        }
+
+        .close-chat {
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            padding: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .close-chat:hover {
+            transform: rotate(90deg) scale(1.2);
+        }
+
+        #chat-mensagens {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 12px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(245, 232, 240, 0.5), rgba(255, 255, 255, 0.3));
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 0;
+        }
+
+        .msg-bubble {
+            padding: 12px 14px;
+            border-radius: 16px;
+            max-width: 85%;
+            line-height: 1.5;
+            position: relative;
+            word-wrap: break-word;
+            animation: fadeInMsg 0.4s ease;
+            font-size: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(8px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .msg-analu {
+            background: linear-gradient(135deg, rgba(245, 232, 240, 0.9), rgba(255, 255, 255, 0.9));
+            align-self: flex-start;
+            border-bottom-left-radius: 3px;
+            color: #5A4A52;
+            border: 1px solid rgba(212, 165, 199, 0.2);
+        }
+
+        .msg-voce {
+            background: linear-gradient(135deg, #D4A5C7 0%, #C494B7 100%);
+            align-self: flex-end;
+            border-bottom-right-radius: 3px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .chat-input-area {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-top: 2px solid rgba(212, 165, 199, 0.2);
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 11px 14px;
+            border-radius: 20px;
+            border: 2px solid #D4A5C7;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            color: #5A4A52;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        #chat-input:focus {
+            border-color: #8B4A6F;
+            background: #F5E8F0;
+            box-shadow: 0 0 12px rgba(139, 74, 111, 0.2);
+            transform: scale(1.02);
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, #8B4A6F 0%, #A85A7F 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(139, 74, 111, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-send::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .btn-send:hover {
+            background: linear-gradient(135deg, #A85A7F 0%, #C46A95 100%);
+            box-shadow: 0 6px 18px rgba(139, 74, 111, 0.35);
+            transform: scale(1.15);
+        }
+
+        .btn-send:active {
+            transform: scale(0.9);
+        }
+
+        .hidden { display: none !important; }
+
+        .section-options {
+            display: none;
+        }
+
+        .section-options.active {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* SCROLLBAR CUSTOMIZADO */
+        #resumo::-webkit-scrollbar,
+        #chat-mensagens::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #resumo::-webkit-scrollbar-track,
+        #chat-mensagens::-webkit-scrollbar-track {
+            background: rgba(212, 165, 199, 0.1);
+            border-radius: 10px;
+        }
+
+        #resumo::-webkit-scrollbar-thumb,
+        #chat-mensagens::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #D4A5C7, #8B4A6F);
+            border-radius: 10px;
+        }
+
+        #resumo::-webkit-scrollbar-thumb:hover,
+        #chat-mensagens::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #8B4A6F, #6B3A5A);
+        }
+    </style>
+</head>
+<body>
+    <header class="top-logo">
+        <img src='https://i.ibb.co/sdpg8P1s/1000113356-removebg-preview.png' alt="Páscoa da Analu">
+    </header>
+
+    <div class="main-container" id="principal-menu">
+        <div class="flex-content">
+            <div class="left-side">
+                <div class="photo-box">
+                    <img id="foto-ovo" src="https://i.ibb.co/gb8K28rT/IMG-20260322-WA0119-1.jpg" alt="Ovo">
+                </div>
+                <div id="resumo">
+                    <div class="cart-title">🛒 Carrinho</div>
+                    <div id="lista-carrinho"></div>
+                </div>
+            </div>
+            <div class="right-side">
+                <h2 class="section-label"> Caixas Especiais
+                </h2>
+                <div class="btn-group" id="btn-group-caixas">
+                    <button class="btn-option btn-size" data-qtd="3" data-nome="Caixa trio 3 ovos de 150g cada" onclick="mudarCaixa(this)">Caixa trio 3 ovos de 150g cada</button>
+                    <button class="btn-option btn-size" data-qtd="1" data-nome="Caixa ovo individual 150g" onclick="mudarCaixa(this)">Caixa ovo individual 150g</button>
+                    <button class="btn-option btn-size" data-qtd="6" data-nome="Caixa 6 ovos 50g" onclick="mudarCaixa(this)">Caixa 6 ovos 50g</button>
+                    <button class="btn-option btn-size" data-qtd="2" data-nome="Caixa 2 ovos 150g cada" onclick="mudarCaixa(this)">Caixa 2 ovos 150g cada</button>
+                    <button class="btn-option btn-size" data-qtd="3" data-nome="Caixa 3 ovos 50g" onclick="mudarCaixa(this)">Caixa 3 ovos 50g</button>
+                    <button class="btn-option btn-size" data-qtd="1" data-nome="Caixa ovo individual 250g" onclick="mudarCaixa(this)">Caixa ovo individual 250g</button>
+                    <button class="btn-option btn-size" data-qtd="1" data-nome="Caixa ovo individual 350g" onclick="mudarCaixa(this)">Caixa ovo individual 350g</button>
+                </div>
+
+                <div id="ovos-section" class="section-options">
+                    <div class="egg-carousel" id="egg-carousel">
+                        <div id="egg-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <button id="btn-add" class="btn-action btn-add-cart" onclick="adicionarAoCarrinho()" disabled>
+                <i class="fas fa-cart-plus"></i> Adicionar ao carrinho
+            </button>
+            <button id="btn-whatsapp" class="btn-action btn-whatsapp hidden" onclick="enviarWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Pedir pelo WhatsApp
+            </button>
+            <button id="btn-more" class="btn-action btn-more hidden" onclick="outroOvo()">
+                <i class="fas fa-plus"></i> Adicionar mais uma caixa
+            </button>
+            <button id="btn-chat" class="btn-action btn-chat-fixo" onclick="abrirChat()">
+                💬 Fale com Analu Virtual
+            </button>
+        </div>
+    </div>
+
+    <div id="chat-box">
+        <div class="chat-header">
+            <span>👩🏻‍🍳 Analu Virtual</span>
+            <span class="close-chat" onclick="abrirChat()">&times;</span>
+        </div>
+        <div id="chat-mensagens">
+            <div class="msg-bubble msg-analu" style="text-align:center;">
+                <img src="https://i.ibb.co/W4BMbRZT/file-00000000d42c720e811df6dd73311902.png"
+                     style="width:70px; margin-bottom:6px; border-radius:12px;">
+                <br>
+                Olá! Sou a Mascote da Analu 👩🏻‍🍳✨<br>
+                Estou aqui para tirar suas dúvidas!
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input id="chat-input" type="text" placeholder="Tire suas dúvidas..." onkeydown="if(event.key==='Enter') enviarMensagem()">
+            <button class="btn-send" onclick="enviarMensagem()" title="Enviar">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let bloqueado = false;
+
+        let configAtual = { 
+            caixa: null, 
+            qtdOvos: 0,
+            ovos: [],
+            currentEggIndex: 0
+        };
+        let carrinho = [];
+        let chatAberto = false;
+
+        const sabores = [
+            "Ninho com Nutella", 
+            "Brigadeiro ao Leite", 
+            "Kinder Bueno",
+            "Bombom de morango", 
+            "Confete kids", 
+            "Ferrero rocher",
+            "Ninho com morango"
+        ];
+
+        const chocolates = ['Meio Amargo', 'Branco'];
+
+        // Mapa de fotos para cada caixa
+        const fotosCaixas = {
+            "Caixa trio 3 ovos de 150g cada": "https://i.ibb.co/pB0VyQ4b/IMG-20260322-WA0144.jpg",
+            "Caixa ovo individual 150g": "https://i.ibb.co/R4BTcgqS/IMG-20260322-WA0147.jpg",
+            "Caixa 6 ovos 50g": "https://i.ibb.co/tNF1dXJ/IMG-20260322-WA0141.jpg",
+            "Caixa 2 ovos 150g cada": "https://i.ibb.co/kskHGHz5/IMG-20260322-WA0134-2.jpg",
+            "Caixa 3 ovos 50g":"https://i.ibb.co/QF7GfrFs/IMG-20260322-WA0137.jpg",
+            "Caixa ovo individual 250g": "https://i.ibb.co/DBwCxHq/IMG-20260322-WA0131.jpg",
+            "Caixa ovo individual 350g": "https://i.ibb.co/1YDJ62B5/IMG-20260322-WA0127.jpg"
+        };
+
+        function trocarFoto(nomeCaixa) {
+            const foto = document.getElementById("foto-ovo");
+            const novaFoto = fotosCaixas[nomeCaixa] || "https://i.ibb.co/r2rtbbvy/IMG-20260213-180019-267.jpg";
+            
+        
+            if (foto.src === novaFoto) return;
+            
+            
+            foto.style.transition = "opacity 0.4s ease";
+            
+            // Fade out
+            foto.style.opacity = "0";
+            
+            setTimeout(() => {
+                
+                foto.src = novaFoto;
+                
+                
+                foto.onload = function() {
+                    // Fade in
+                    foto.style.opacity = "1";
+                };
+                
+                // Fallback se a imagem não carregar em 1.5s
+                setTimeout(() => {
+                    foto.style.opacity = "1";
+                }, 1500);
+            }, 400);
+        }
+
+        function mudarCaixa(btn) {
+            if (bloqueado) {
+                alert("Clique em 'Adicionar mais uma caixa' para montar outro pedido 😊");
+                return;
+            }
+            
+            const nome = btn.getAttribute("data-nome");
+            const qtd = parseInt(btn.getAttribute("data-qtd"));
+            
+            // Remove active de todos os botões
+            document.querySelectorAll('.btn-size').forEach(b => b.classList.remove('active'));
+            
+            // Adiciona active ao botão clicado
+            btn.classList.add('active');
+            
+            // Atualiza config
+            configAtual.caixa = nome;
+            configAtual.qtdOvos = qtd;
+            configAtual.ovos = Array(qtd).fill(null).map(() => ({ recheio: '', chocolate: '' }));
+            configAtual.currentEggIndex = 0;
+
+            trocarFoto(nome);
+            
+            
+            document.getElementById('ovos-section').classList.add('active');
+            mostrarProximoOvo();
+        }
+
+        function mostrarProximoOvo() {
+            const container = document.getElementById('egg-container');
+            
+            if (configAtual.currentEggIndex < configAtual.qtdOvos) {
+                const currentEgg = configAtual.ovos[configAtual.currentEggIndex];
+                const eggIndex = configAtual.currentEggIndex;
+                
+                container.innerHTML = `
+                    <div class="egg-container">
+                        <div class="egg-title">
+                            🥚 Ovo ${eggIndex + 1}
+                            <span class="egg-progress">${eggIndex + 1}/${configAtual.qtdOvos}</span>
+                        </div>
+                        <div class="egg-selection">
+                            <div class="selection-group">
+                                <label class="selection-label">🍫 Sabor do Recheio</label>
+                                <select class="selection-input" id="recheio-select" onchange="atualizarRecheio(this.value)">
+                                    <option value="">Escolha um sabor...</option>
+                                    ${sabores.map(s => `<option value="${s}">${s}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="selection-group">
+                                <label class="selection-label">☕ Tipo de Chocolate</label>
+                                <select class="selection-input" id="chocolate-select" onchange="atualizarChocolate(this.value)">
+                                    <option value="">Escolha um chocolate...</option>
+                                    ${chocolates.map(c => `<option value="${c}">${c}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-next-egg" onclick="proximoOvo()" id="btn-proximo" disabled>
+                            <span>${eggIndex === configAtual.qtdOvos - 1 ? 'Finalizar seleção' : 'Próximo ovo'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    const recheioSelect = document.getElementById('recheio-select');
+                    const chocolateSelect = document.getElementById('chocolate-select');
+                    
+                    if (recheioSelect && currentEgg.recheio) {
+                        recheioSelect.value = currentEgg.recheio;
+                    }
+                    if (chocolateSelect && currentEgg.chocolate) {
+                        chocolateSelect.value = currentEgg.chocolate;
+                    }
+                }, 50);
+            }
+        }
+
+        function atualizarRecheio(valor) {
+            configAtual.ovos[configAtual.currentEggIndex].recheio = valor;
+            atualizarBotaoProximo();
+        }
+
+        function atualizarChocolate(valor) {
+            configAtual.ovos[configAtual.currentEggIndex].chocolate = valor;
+            atualizarBotaoProximo();
+        }
+
+        function atualizarBotaoProximo() {
+            const btn = document.getElementById('btn-proximo');
+            if (!btn) return;
+            
+            const currentEgg = configAtual.ovos[configAtual.currentEggIndex];
+            
+            if (currentEgg.recheio && currentEgg.chocolate) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        window.proximoOvo = function() {
+            const container = document.getElementById('egg-container');
+            const eggElement = container.querySelector('.egg-container');
+            
+            if (eggElement) {
+                eggElement.classList.add('exit');
+                
+                setTimeout(() => {
+                    configAtual.currentEggIndex++;
+                    
+                    if (configAtual.currentEggIndex < configAtual.qtdOvos) {
+                        mostrarProximoOvo();
+                    } else {
+                        container.innerHTML = `
+                            <div style="text-align: center; animation: fadeInEgg 0.5s ease forwards;">
+                                <div style="font-size: 40px; margin-bottom: 10px;">✅</div>
+                                <div style="font-size: 16px; font-weight: 700; color: #8B4A6F; margin-bottom: 8px;">Perfeito!</div>
+                                <div style="font-size: 13px; color: #5A4A52;">Todos os ovos montados!<br>Clique em "Adicionar ao carrinho"</div>
+                            </div>
+                        `;
+                        
+                        const btnAdd = document.getElementById('btn-add');
+                        btnAdd.disabled = false;
+                        btnAdd.classList.add('glow');
+                    }
+                }, 500);
+            }
+        }
+
+        function adicionarAoCarrinho() {
+            const novoItem = {
+                id: Date.now(),
+                caixa: configAtual.caixa,
+                ovos: JSON.parse(JSON.stringify(configAtual.ovos))
+            };
+            
+            carrinho.push(novoItem);
+            renderizarCarrinho();
+            bloqueado = true;
+            desabilitarBotoesCaixas();
+            resetarFormulario();
+            
+            document.getElementById('btn-add').classList.add('hidden');
+            document.getElementById('btn-whatsapp').classList.remove('hidden');
+            document.getElementById('btn-whatsapp').classList.add('glow');
+            document.getElementById('btn-more').classList.remove('hidden');
+        }
+
+        function desabilitarBotoesCaixas() {
+            document.querySelectorAll('.btn-size').forEach(btn => {
+                btn.classList.add('disabled');
+                btn.onclick = null;
+                btn.style.pointerEvents = 'none';
+            });
+        }
+
+        function habilitarBotoesCaixas() {
+            document.querySelectorAll('.btn-size').forEach(btn => {
+                btn.classList.remove('disabled');
+                btn.style.pointerEvents = 'auto';
+                btn.onclick = function() { mudarCaixa(this); };
+            });
+        }
+
+        function resetarFormulario() {
+            configAtual = { 
+                caixa: null, 
+                qtdOvos: 0,
+                ovos: [],
+                currentEggIndex: 0
+            };
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+            document.getElementById('ovos-section').classList.remove('active');
+            document.getElementById('egg-container').innerHTML = '';
+            
+            const btnAdd = document.getElementById('btn-add');
+            btnAdd.disabled = true;
+            btnAdd.classList.remove('glow');
+        }
+
+        function renderizarCarrinho() {
+            const listaDiv = document.getElementById('lista-carrinho');
+            const resumoDiv = document.getElementById('resumo');
+            listaDiv.innerHTML = "";
+            
+            if (carrinho.length === 0) {
+                resumoDiv.style.display = 'none';
+                return;
+            }
+            
+            resumoDiv.style.display = 'block';
+            carrinho.forEach(item => {
+                let eggDetails = '';
+                item.ovos.forEach((ovo, idx) => {
+                    eggDetails += `<div class="cart-egg">🥚 ${ovo.recheio} <small>(${ovo.chocolate})</small></div>`;
+                });
+
+                const itemHtml = `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <strong>🎁 ${item.caixa}</strong>
+                            <div class="cart-item-details">
+                                ${eggDetails}
+                            </div>
+                        </div>
+                        <div class="btn-remove" onclick="removerItem(${item.id})" title="Remover">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                `;
+                listaDiv.innerHTML += itemHtml;
+            });
+        }
+
+        function removerItem(id) {
+            carrinho = carrinho.filter(item => item.id !== id);
+            renderizarCarrinho();
+            if (carrinho.length === 0) {
+                bloqueado = false;
+                habilitarBotoesCaixas();
+                resetarFormulario();
+                document.getElementById('btn-add').classList.remove('hidden');
+                document.getElementById('btn-whatsapp').classList.add('hidden');
+                document.getElementById('btn-whatsapp').classList.remove('glow');
+                document.getElementById('btn-more').classList.add('hidden');
+            }
+        }
+
+        function outroOvo() {
+            bloqueado = false;
+            habilitarBotoesCaixas();
+            if (carrinho.length >= 6) {
+                alert("que tal enviar esses pedidos primeiro? 🥰");
+                return;
+            }
+            resetarFormulario();
+            document.getElementById('btn-add').classList.remove('hidden');
+            document.getElementById('btn-whatsapp').classList.add('hidden');
+            document.getElementById('btn-whatsapp').classList.remove('glow');
+            document.getElementById('btn-more').classList.add('hidden');
+        }
+
+        function enviarWhatsApp() {
+            const numero = "558396905025";
+            let msg = "Olá Analu! Gostaria de encomendar:\n\n";
+            carrinho.forEach((item, i) => {
+                msg += `*${i + 1}º ${item.caixa}*\n`;
+                item.ovos.forEach((ovo, idx) => {
+                    msg += `  🥚 Ovo ${idx + 1}: ${ovo.recheio} (${ovo.chocolate})\n`;
+                });
+                msg += "\n";
+            });
+            window.open(`https://wa.me/${numero}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function abrirChat() {
+            const chat = document.getElementById("chat-box");
+            chatAberto = !chatAberto;
+            if (chatAberto) {
+                chat.classList.add('open');
+            } else {
+                chat.classList.remove('open');
+            }
+        }
+
+        function enviarMensagem() {
+            const input = document.getElementById("chat-input");
+            const mensagens = document.getElementById("chat-mensagens");
+            const texto = input.value.toLowerCase().trim();
+            if (texto === "") return;
+            
+            const msgBubble = document.createElement('div');
+            msgBubble.className = 'msg-bubble msg-voce';
+            msgBubble.innerHTML = `${input.value}`;
+            mensagens.appendChild(msgBubble);
+            mensagens.scrollTop = mensagens.scrollHeight;
+            
+            let resposta = null;
+
+            const normalizar = (txt) => txt
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+
+            const textoNormalizado = normalizar(texto);
+
+            const contem = (palavras) => palavras.some(p => textoNormalizado.includes(normalizar(p)));
+
+           
+if (contem(["instagram", "insta", "instagran", "istagram", "intragram", "estagram", "perfil"])) {
+    resposta = "Nosso Instagram é 👉 <a href='https://instagram.com/_docesdaanalu_' target='_blank' style='color:#8B4A6F; font-weight:bold;'>@_docesdaanalu_</a> 💖";
+
+} 
+// 2. CONTATO DIRETO
+else if (contem(["whatsapp", "zap", "contato", "numero", "telefone", "falar com alguem", "atendente"])) {
+    resposta = "Fala comigo aqui 👇<br><br>\
+    <a href='https://wa.me/558396905025' target='_blank' style='display:inline-block; background:#25D366; color:white; padding:10px 15px; border-radius:10px; text-decoration:none; font-weight:bold;'>💬 Abrir WhatsApp</a>";
+
+} 
+// 3. PREÇO E CARDÁPIO
+else if (contem(["preço", "preco", "valor", "quanto custa", "quanto é", "tabela", "cardapio", "cardápio", "menu", "lista"])) {
+    resposta = "Temos o cardápio completo com valores no WhatsApp 💰<br><br>\
+    <a href='https://wa.me/558396905025' target='_blank' style='display:inline-block; background:#25D366; color:white; padding:10px 15px; border-radius:10px; text-decoration:none; font-weight:bold;'>📲 Ver cardápio</a>";
+
+} 
+
+else if (contem(["tem ovo hoje", "tem hoje", "pra hoje", "urgente", "tem agora", "pronta entrega", "disponivel", "disponível"])) {
+    resposta = "Seria pra qual horário? ⏰<br><br>\
+    Me chama lá no Instagram pra alinharmos a pronta entrega de hoje 💖<br>\
+    👉 <a href='https://instagram.com/_docesdaanalu_' target='_blank' style='color:#8B4A6F; font-weight:bold;'>@_docesdaanalu_</a>";
+
+} 
+
+else if (contem(["oi", "ola", "oii", "eae", "fala", "opa", "salve", "bom dia", "boa tarde", "boa noite"])) {  
+    resposta = "Oiiee! 👩🏻‍🍳🍫 Sou a Analu! Me conta... é pra presente ou pra você? 😍";
+
+} 
+
+else if (contem(["sabores", "recheios", "opcoes", "opções", "mais vendido", "melhor", "recomendacao", "indica"])) {
+    resposta = "Os nossos queridinhos são **Kinder Bueno** e **Ninho com Morango** 🤤🍫<br><br>\
+    Temos várias outras opções incríveis no cardápio! Qual seu sabor favorito? 😍";
+
+} 
+
+else if (contem(["entrega", "frete", "entregam", "onde fica", "endereco", "endereço", "bairro", "cidade", "joao pessoa", "cabedelo"])) {
+    resposta = "Entregamos em **João Pessoa e Cabedelo** 🚚💖<br><br>\
+    A taxa varia por bairro. Me chama aqui para eu calcular o frete para você 👇<br><br>\
+    <a href='https://wa.me/558396905025' target='_blank' style='display:inline-block; background:#25D366; color:white; padding:10px 15px; border-radius:10px; text-decoration:none; font-weight:bold;'>📍 Calcular frete</a>";
+
+} 
+
+else if (contem(["horario", "horário", "aberto", "funciona", "atendimento", "ta aberto", "até que horas"])) {
+    resposta = "Funcionamos de **domingo a domingo** 💪 pra adoçar sua vida!<br><br>\
+    Me chama no WhatsApp para garantir o seu pedido de hoje 👇<br><br>\
+    <a href='https://wa.me/558396905025' target='_blank' style='display:inline-block; background:#25D366; color:white; padding:10px 15px; border-radius:10px; text-decoration:none; font-weight:bold;'>🛒 Pedir agora</a>";
+
+}
+
+else if (contem(["o que vem", "conteudo", "recheado", "colher", "embalagem", "artesanal", "tamanho", "gramas", "peso"])) {
+    resposta = "Nossos ovos são super recheados, artesanais e acompanham colher! 🥄🎁<br>\
+ vários tamanhos disponíveis,temos de 50g,150gm,250gm e 350g</a>";
+
+} 
+
+else if (contem(["pagamento", "pix", "cartao", "cartão", "dinheiro", "aceita"])) {
+    resposta = "Aceitamos **Pix, débito e crédito** 💳✨ (parcelamos suas compras)!";
+
+} 
+
+else if (contem(["demora", "tempo", "prazo", "antecedencia", "ultima hora"])) {
+    resposta = "A entrega é rápida (1 a 2 horas), mas para encomendas personalizadas o ideal são **2 dias de antecedência**! ⏳💖";
+
+} 
+
+else if (contem(["validade", "geladeira", "gelar", "conservar", "fresco"])) {
+    resposta = "Tudo é feito fresquinho! 😍 A validade é de até **5 dias na geladeira** ❄️";
+
+}
+
+else if (contem(["obrigado", "obrigada", "valeu", "show", "obg"])) { 
+    resposta = "Eu que agradeço! Tenho certeza que você vai amar 😍🍫";
+
+} 
+
+else {
+    resposta = "Me conta melhor o que você procura 😍🍫 Pode ser sobre sabores, entrega ou preços!<br><br>\
+    Ou se preferir, fala comigo direto no WhatsApp 👇<br><br>\
+    <a href='https://wa.me/558396905025' target='_blank' style='display:inline-block; background:#25D366; color:white; padding:10px 15px; border-radius:10px; text-decoration:none; font-weight:bold;'>💬 Falar com a Analu</a>";
+}
+
+            setTimeout(() => {
+                const msgAnalu = document.createElement('div');
+                msgAnalu.className = 'msg-bubble msg-analu';
+                msgAnalu.innerHTML = `${resposta}`;
+                mensagens.appendChild(msgAnalu);
+                mensagens.scrollTop = mensagens.scrollHeight;
+            }, 600);
+            
+            input.value = "";
+        }
+    </script>
+</body>
+</html>
